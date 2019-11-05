@@ -1,0 +1,62 @@
+<mat-card class="md-margin">
+  <mat-toolbar [style.background]="'category'" *ngIf="category !== undefined">
+    <span flex>{{ category.Title }}</span>
+    <button mat-icon-button color="warn" (click)="deleteCategory()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <div layout="column" *ngIf="categoryForm.disabled" class="md-padding">
+    <p>{{ category.Description }}</p>
+    <p [style.color]="'lightgrey'">created on {{ category.CreatedOn | date }}</p>
+  </div>
+  <form
+    [formGroup]="categoryForm"
+    (submit)="updateCategory($event)"
+    layout="column"
+    *ngIf="categoryForm.enabled"
+    class="md-padding"
+  >
+    <mat-form-field appearance="outline" flex>
+      <mat-label>Title</mat-label>
+      <input
+        matInput
+        formControlName="title"
+        placeholder="Give this category a title"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline" flex>
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Type up your description"
+      ></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent">
+      {{ category !== undefined ? "Update Category" : "Create Category" }}
+    </button>
+    <button mat-raised-button *ngIf="category !== undefined">
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      *ngIf="category === undefined"
+      (click)="cancelNewCategory()"
+    >
+      Cancel
+    </button>
+  </form>
+
+  <div layout="column" class="md-padding">
+    <button
+      mat-raised-button
+      color="primary"
+      *ngIf="categoryForm.disabled"
+      (click)="categoryForm.enable()"
+    >
+      Update Category
+    </button>
+  </div>
+</mat-card>

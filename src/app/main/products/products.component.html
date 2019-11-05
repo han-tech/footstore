@@ -1,0 +1,18 @@
+<div *ngIf="user | async as User">
+    <button mat-raised-button color="accent" (click)="newProduct = true">
+      Create Product
+    </button>
+  
+    <h2 *ngIf="User.NumProducts === 0">Looks like there are no products to display</h2>
+    <h2 *ngIf="User.NumProducts > 0">You have {{ User.NumProducts }} products</h2>
+  
+    <app-product *ngIf="newProduct" (update)="createProduct($event, User.Id)"></app-product>
+  
+    <app-product
+      *ngFor="let product of products | async"
+      [product]="product"
+      (update)="updateProduct($event)"
+      (delete)="deleteProduct($event)"
+    ></app-product>
+  </div>
+  

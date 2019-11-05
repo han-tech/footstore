@@ -1,0 +1,62 @@
+<mat-card class="md-margin">
+  <mat-toolbar [style.background]="'none'" *ngIf="product !== undefined">
+    <span flex>{{ product.Name }}</span>
+    <button mat-icon-button color="warn" (click)="deleteProduct()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <div layout="column" *ngIf="productForm.disabled" class="md-padding">
+    <p>{{ product.Description }}</p>
+    <p [style.color]="'lightgrey'">created on {{ product.CreatedOn | date }}</p>
+  </div>
+  <form
+    [formGroup]="productForm"
+    (submit)="updateProduct($event)"
+    layout="column"
+    *ngIf="productForm.enabled"
+    class="md-padding"
+  >
+    <mat-form-field appearance="outline" flex>
+      <mat-label>Name</mat-label>
+      <input
+        matInput
+        formControlName="name"
+        placeholder="Give this product a name"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="outline" flex>
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Type up your description"
+      ></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent">
+      {{ product !== undefined ? "Update Product" : "Create Product" }}
+    </button>
+    <button mat-raised-button *ngIf="product !== undefined">
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      *ngIf="product === undefined"
+      (click)="cancelNewProduct()"
+    >
+      Cancel
+    </button>
+  </form>
+
+  <div layout="column" class="md-padding">
+    <button
+      mat-raised-button
+      color="primary"
+      *ngIf="productForm.disabled"
+      (click)="productForm.enable()"
+    >
+      Update Product
+    </button>
+  </div>
+</mat-card>

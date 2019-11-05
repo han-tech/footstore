@@ -1,0 +1,17 @@
+<div *ngIf="user | async as User">
+  <button mat-raised-button color="accent" (click)="newCategory = true">
+    Create Category
+  </button>
+
+  <h2 *ngIf="User.NumCategories === 0">Looks like there are no categories to display</h2>
+  <h2 *ngIf="User.NumCategories > 0">You have {{ User.NumCategories }} categoris</h2>
+
+  <app-category *ngIf="newCategory" (update)="createCategory($event, User.Id)"></app-category>
+
+  <app-category
+    *ngFor="let category of categories | async"
+    [category]="category"
+    (update)="updateCategory($event)"
+    (delete)="deleteCategory($event)"
+  ></app-category>
+</div>
